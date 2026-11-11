@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="16.0" style="-fx-padding: 20px; -fx-background-color: #f8fafc;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.applytrack.controller.ApplicationsController">
+    <!-- Header Section -->
+    <HBox alignment="CENTER_LEFT" spacing="16.0">
+        <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Job Applications" />
+            <Label style="-fx-font-size: 13px; -fx-text-fill: #64748b;" text="Centralized application pipeline: add, edit, track deadlines, and monitor outcomes" />
+        </VBox>
+        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+            <Label fx:id="recordCountBadge" style="-fx-background-color: #e0e7ff; -fx-text-fill: #4338ca; -fx-font-weight: bold; -fx-font-size: 12px; -fx-padding: 6 14 6 14; -fx-background-radius: 20px;" text="0 Applications" />
+            <Button fx:id="addApplicationBtn" onAction="#handleAddNewApplication" styleClass="btn-primary" text="+ Add Application" />
+            <Button fx:id="refreshBtn" onAction="#handleRefresh" styleClass="btn-secondary" text="↻ Refresh" />
+        </HBox>
+    </HBox>
+
+    <!-- Search, Filter & Sort Controls Card -->
+    <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="card" style="-fx-padding: 12px 16px;">
+        <TextField fx:id="searchField" maxWidth="320.0" promptText="Search by company or job role..." HBox.hgrow="ALWAYS" />
+        <ComboBox fx:id="statusFilterBox" prefWidth="175.0" promptText="Status Filter" />
+        <ComboBox fx:id="jobTypeFilterBox" prefWidth="155.0" promptText="Job Type Filter" />
+        <ComboBox fx:id="sortByBox" prefWidth="200.0" promptText="Sort Applications" />
+        <Button fx:id="resetFiltersBtn" onAction="#handleResetFilters" styleClass="btn-secondary" text="Reset Filters" />
+    </HBox>
+
+    <!-- Status Feedback Banner -->
+    <HBox alignment="CENTER_LEFT" spacing="8.0" style="-fx-padding: 0 4 0 4;">
+        <Label fx:id="statusMessageLabel" style="-fx-font-size: 12px; -fx-text-fill: #64748b; -fx-font-weight: 500;" text="Ready" />
+    </HBox>
+
+    <!-- Table & Empty State StackPane -->
+    <StackPane VBox.vgrow="ALWAYS">
+        <TableView fx:id="applicationsTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="companyCol" prefWidth="180.0" text="Company" />
+                <TableColumn fx:id="roleCol" prefWidth="200.0" text="Job Role" />
+                <TableColumn fx:id="typeCol" prefWidth="115.0" text="Type" />
+                <TableColumn fx:id="dateCol" prefWidth="120.0" text="Applied Date" />
+                <TableColumn fx:id="deadlineCol" prefWidth="130.0" text="Deadline" />
+                <TableColumn fx:id="salaryCol" prefWidth="130.0" text="Salary / Stipend" />
+                <TableColumn fx:id="statusCol" prefWidth="150.0" text="Status" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" />
+            </columnResizePolicy>
+        </TableView>
+
+        <!-- Empty State Container -->
+        <VBox fx:id="emptyStateContainer" alignment="CENTER" spacing="12.0" styleClass="empty-state-container" visible="false">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #334155;" text="No Job Applications Found" />
+            <Label styleClass="empty-state-text" text="There are no applications matching your current filter criteria." />
+            <Button onAction="#handleAddNewApplication" styleClass="btn-primary" text="+ Add New Application Now" />
+        </VBox>
+    </StackPane>
+
+    <!-- Bottom Action Toolbar -->
+    <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="card" style="-fx-padding: 12px 16px;">
+        <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #475569;" text="Selected Application:" />
+        <Label fx:id="selectedAppLabel" style="-fx-font-size: 13px; -fx-text-fill: #64748b;" text="None selected (click a row above)" HBox.hgrow="ALWAYS" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Button fx:id="scheduleInterviewBtn" disable="true" onAction="#handleScheduleInterview" styleClass="btn-secondary" text="+ Schedule Interview" />
+        <Button fx:id="viewDetailsBtn" disable="true" onAction="#handleViewDetails" styleClass="btn-secondary" text="View Details" />
+        <Button fx:id="editBtn" disable="true" onAction="#handleEditApplication" styleClass="btn-secondary" text="Edit Application" />
+        <Button fx:id="deleteBtn" disable="true" onAction="#handleDeleteApplication" styleClass="btn-danger" text="Delete Application" />
+    </HBox>
+</VBox>
+

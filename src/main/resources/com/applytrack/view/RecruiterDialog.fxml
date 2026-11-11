@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefWidth="600.0" spacing="18.0" style="-fx-padding: 24px; -fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.applytrack.controller.RecruiterDialogController">
+    <!-- Header -->
+    <VBox spacing="4.0">
+        <Label fx:id="dialogTitleLabel" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Add New Recruiter" />
+        <Label style="-fx-font-size: 13px; -fx-text-fill: #64748b;" text="Record talent partner contact information, company affiliation, and hiring notes" />
+    </VBox>
+
+    <!-- Error Banner -->
+    <Label fx:id="errorLabel" managed="false" style="-fx-background-color: #fee2e2; -fx-text-fill: #b91c1c; -fx-font-weight: bold; -fx-padding: 8 12 8 12; -fx-background-radius: 6px; -fx-font-size: 12.5px;" text="Validation error placeholder" visible="false" wrapText="true" />
+
+    <!-- Form Grid -->
+    <GridPane hgap="16.0" vgap="14.0">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50.0" />
+            <ColumnConstraints percentWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
+
+        <!-- Recruiter Name (Required) -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label styleClass="form-label" text="Recruiter Full Name *" />
+            <TextField fx:id="nameField" promptText="e.g. Sarah Jenkins, Rohan Verma" />
+        </VBox>
+
+        <!-- Company Affiliation -->
+        <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label styleClass="form-label" text="Company Affiliation *" />
+            <ComboBox fx:id="companyBox" maxWidth="Infinity" promptText="Select affiliated company..." />
+        </VBox>
+
+        <!-- Email Address -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label styleClass="form-label" text="Email Address (Optional)" />
+            <TextField fx:id="emailField" promptText="e.g. sarah.jenkins@company.com" />
+        </VBox>
+
+        <!-- Phone Number -->
+        <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label styleClass="form-label" text="Phone Number (Optional)" />
+            <TextField fx:id="phoneField" promptText="e.g. +1-650-555-0199 or 9876543210" />
+        </VBox>
+
+        <!-- LinkedIn URL -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <Label styleClass="form-label" text="LinkedIn Profile URL (Optional)" />
+            <TextField fx:id="linkedinField" promptText="https://linkedin.com/in/recruiter-profile" />
+        </VBox>
+
+        <!-- Notes -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <Label styleClass="form-label" text="Recruiter Notes &amp; Communication History (Optional)" />
+            <TextArea fx:id="notesArea" prefRowCount="4" promptText="Campus hiring lead, prefers email contact, discussed expected salary..." wrapText="true" />
+        </VBox>
+    </GridPane>
+
+    <!-- Bottom Actions -->
+    <HBox alignment="CENTER_RIGHT" spacing="12.0" style="-fx-padding: 8 0 0 0;">
+        <Button fx:id="cancelBtn" onAction="#handleCancel" styleClass="btn-secondary" text="Cancel" />
+        <Button fx:id="saveBtn" onAction="#handleSave" styleClass="btn-primary" text="Save Recruiter" />
+    </HBox>
+</VBox>
+

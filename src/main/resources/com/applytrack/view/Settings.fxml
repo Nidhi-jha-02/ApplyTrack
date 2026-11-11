@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.applytrack.controller.SettingsController">
+    <children>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;">
+            <content>
+                <VBox spacing="18.0" style="-fx-padding: 10px;">
+                    <!-- Header Bar -->
+                    <HBox alignment="CENTER_LEFT" spacing="16.0" style="-fx-background-color: white; -fx-background-radius: 12px; -fx-padding: 18px 24px; -fx-border-color: #e2e8f0; -fx-border-radius: 12px; -fx-border-width: 1px;">
+                        <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                            <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Settings &amp; User Profile Center" />
+                            <Label style="-fx-font-size: 13px; -fx-text-fill: #64748b;" text="Manage your candidate account, update credentials, configure system themes and application preferences." />
+                        </VBox>
+                        <HBox alignment="CENTER_RIGHT" spacing="12.0">
+                            <Label fx:id="headerUserBadge" style="-fx-background-color: #e0e7ff; -fx-text-fill: #4338ca; -fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 6 12 6 12; -fx-background-radius: 20px;" text="User #1" />
+                        </HBox>
+                    </HBox>
+
+                    <!-- Feedback Notification Banner -->
+                    <HBox fx:id="feedbackBanner" alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: #f0fdf4; -fx-border-color: #bbf7d0; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-padding: 12px 18px;" visible="false">
+                        <Label fx:id="feedbackIcon" style="-fx-font-size: 16px;" text="✅" />
+                        <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                            <Label fx:id="feedbackTitle" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #166534;" text="Changes Saved Successfully" />
+                            <Label fx:id="feedbackDetails" style="-fx-font-size: 11.5px; -fx-text-fill: #15803d;" text="Profile updated in database" />
+                        </VBox>
+                        <Button onAction="#handleDismissFeedback" style="-fx-background-color: transparent; -fx-text-fill: #166534; -fx-font-weight: bold; -fx-cursor: hand;" text="✕" />
+                    </HBox>
+
+                    <!-- Main Settings TabPane -->
+                    <TabPane fx:id="settingsTabPane" prefHeight="560.0" style="-fx-background-color: white; -fx-background-radius: 12px; -fx-border-color: #e2e8f0; -fx-border-radius: 12px; -fx-border-width: 1px;" tabClosingPolicy="UNAVAILABLE">
+                        <tabs>
+                            <!-- Tab 1: My Profile -->
+                            <Tab text="👤 My Profile">
+                                <content>
+                                    <VBox spacing="20.0" style="-fx-padding: 24px;">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Candidate Profile Information" />
+                                        <Label style="-fx-font-size: 12.5px; -fx-text-fill: #64748b;" text="Update your personal details below. Your name will be used across generated reports and dashboard greetings." />
+
+                                        <GridPane hgap="16.0" vgap="16.0" style="-fx-max-width: 650px;">
+                                            <columnConstraints>
+                                                <ColumnConstraints prefWidth="180.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="40.0" />
+                                                <RowConstraints minHeight="40.0" />
+                                                <RowConstraints minHeight="40.0" />
+                                                <RowConstraints minHeight="40.0" />
+                                                <RowConstraints minHeight="40.0" />
+                                            </rowConstraints>
+
+                                            <!-- Full Name -->
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 13px;" text="Full Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                            <TextField fx:id="profileFullNameField" prefHeight="38.0" promptText="Your full name" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                            <!-- Email -->
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 13px;" text="Email Address:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <TextField fx:id="profileEmailField" prefHeight="38.0" promptText="Your registered email" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                            <!-- User ID (Read-only) -->
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 13px;" text="Candidate Account ID:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <Label fx:id="profileUserIdLabel" style="-fx-text-fill: #64748b; -fx-font-size: 13px; -fx-font-weight: bold;" text="1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                            <!-- Created At -->
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 13px;" text="Member Since:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                            <Label fx:id="profileCreatedAtLabel" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="—" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                                            <!-- Updated At -->
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 13px;" text="Last Profile Update:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                            <Label fx:id="profileUpdatedAtLabel" style="-fx-text-fill: #64748b; -fx-font-size: 13px;" text="—" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        </GridPane>
+
+                                        <Separator style="-fx-opacity: 0.6;" />
+
+                                        <HBox spacing="14.0">
+                                            <Button onAction="#handleSaveProfile" prefHeight="38.0" style="-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-cursor: hand; -fx-padding: 8 20 8 20;" text="Save Profile Changes" />
+                                            <Button onAction="#handleResetProfile" prefHeight="38.0" style="-fx-background-color: #f1f5f9; -fx-text-fill: #475569; -fx-font-weight: 600; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-cursor: hand; -fx-padding: 8 16 8 16;" text="Reset Fields" />
+                                        </HBox>
+                                    </VBox>
+                                </content>
+                            </Tab>
+
+                            <!-- Tab 2: Security (Change Password) -->
+                            <Tab text="🔒 Security &amp; Password">
+                                <content>
+                                    <VBox spacing="18.0" style="-fx-padding: 24px;">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Change Password" />
+                                        <Label style="-fx-font-size: 12.5px; -fx-text-fill: #64748b;" text="Ensure your account is protected with a strong password. Passwords are encrypted with 10-round salted BCrypt." />
+
+                                        <VBox spacing="14.0" style="-fx-max-width: 520px;">
+                                            <!-- Current Password -->
+                                            <VBox spacing="6.0">
+                                                <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 12.5px;" text="Current Password:" />
+                                                <StackPane alignment="CENTER_RIGHT">
+                                                    <PasswordField fx:id="currentPasswordField" prefHeight="38.0" promptText="Enter current password" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px; -fx-padding: 0 40 0 10;" />
+                                                    <TextField fx:id="currentPasswordVisibleField" managed="false" prefHeight="38.0" promptText="Enter current password" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px; -fx-padding: 0 40 0 10;" visible="false" />
+                                                    <Button fx:id="toggleCurrentPasswordBtn" onAction="#handleToggleCurrentPassword" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-text-fill: #64748b; -fx-font-size: 11px; -fx-font-weight: bold;" text="Show" />
+                                                </StackPane>
+                                            </VBox>
+
+                                            <!-- New Password -->
+                                            <VBox spacing="6.0">
+                                                <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 12.5px;" text="New Password (min. 8 characters):" />
+                                                <StackPane alignment="CENTER_RIGHT">
+                                                    <PasswordField fx:id="newPasswordField" prefHeight="38.0" promptText="Enter new secure password" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px; -fx-padding: 0 40 0 10;" />
+                                                    <TextField fx:id="newPasswordVisibleField" managed="false" prefHeight="38.0" promptText="Enter new secure password" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px; -fx-padding: 0 40 0 10;" visible="false" />
+                                                    <Button fx:id="toggleNewPasswordBtn" onAction="#handleToggleNewPassword" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-text-fill: #64748b; -fx-font-size: 11px; -fx-font-weight: bold;" text="Show" />
+                                                </StackPane>
+                                            </VBox>
+
+                                            <!-- Confirm Password -->
+                                            <VBox spacing="6.0">
+                                                <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 12.5px;" text="Confirm New Password:" />
+                                                <StackPane alignment="CENTER_RIGHT">
+                                                    <PasswordField fx:id="confirmPasswordField" prefHeight="38.0" promptText="Re-enter new password" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px; -fx-padding: 0 40 0 10;" />
+                                                    <TextField fx:id="confirmPasswordVisibleField" managed="false" prefHeight="38.0" promptText="Re-enter new password" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px; -fx-padding: 0 40 0 10;" visible="false" />
+                                                    <Button fx:id="toggleConfirmPasswordBtn" onAction="#handleToggleConfirmPassword" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-text-fill: #64748b; -fx-font-size: 11px; -fx-font-weight: bold;" text="Show" />
+                                                </StackPane>
+                                            </VBox>
+                                        </VBox>
+
+                                        <Separator style="-fx-opacity: 0.6;" />
+
+                                        <HBox spacing="14.0">
+                                            <Button onAction="#handleUpdatePassword" prefHeight="38.0" style="-fx-background-color: #0f172a; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-cursor: hand; -fx-padding: 8 20 8 20;" text="Update Password" />
+                                            <Button onAction="#handleClearPasswordFields" prefHeight="38.0" style="-fx-background-color: #f1f5f9; -fx-text-fill: #475569; -fx-font-weight: 600; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-cursor: hand; -fx-padding: 8 16 8 16;" text="Clear Fields" />
+                                        </HBox>
+                                    </VBox>
+                                </content>
+                            </Tab>
+
+                            <!-- Tab 3: Preferences -->
+                            <Tab text="🎨 Preferences">
+                                <content>
+                                    <VBox spacing="20.0" style="-fx-padding: 24px;">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Application &amp; Dashboard Customization" />
+                                        <Label style="-fx-font-size: 12.5px; -fx-text-fill: #64748b;" text="Customize your workspace theme and default views. Preferences are saved per user in MariaDB and restored upon restart." />
+
+                                        <VBox spacing="16.0" style="-fx-max-width: 580px;">
+                                            <!-- Theme Selection -->
+                                            <VBox spacing="6.0">
+                                                <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 13px;" text="Visual Theme:" />
+                                                <ComboBox fx:id="themeComboBox" prefHeight="38.0" prefWidth="350.0" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px; -fx-cursor: hand;" />
+                                                <Label style="-fx-font-size: 11.5px; -fx-text-fill: #64748b;" text="Choose between Clean Light and Sleek Dark themes. Transitions immediately upon save." />
+                                            </VBox>
+
+                                            <!-- Default Landing Page -->
+                                            <VBox spacing="6.0">
+                                                <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 13px;" text="Default Landing Page:" />
+                                                <ComboBox fx:id="landingPageComboBox" prefHeight="38.0" prefWidth="350.0" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px; -fx-cursor: hand;" />
+                                                <Label style="-fx-font-size: 11.5px; -fx-text-fill: #64748b;" text="Initial module loaded when opening ApplyTrack after signing in." />
+                                            </VBox>
+
+                                            <!-- Preferred Analytics Scope -->
+                                            <VBox spacing="6.0">
+                                                <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 13px;" text="Preferred Analytics Date Scope:" />
+                                                <ComboBox fx:id="analyticsScopeComboBox" prefHeight="38.0" prefWidth="350.0" style="-fx-background-color: #f8fafc; -fx-border-color: #cbd5e1; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-font-size: 13px; -fx-cursor: hand;" />
+                                                <Label style="-fx-font-size: 11.5px; -fx-text-fill: #64748b;" text="Default timeframe selection for charts in Career Analytics." />
+                                            </VBox>
+
+                                            <Separator style="-fx-opacity: 0.6;" />
+
+                                            <!-- In-App Reminders -->
+                                            <VBox spacing="10.0">
+                                                <Label style="-fx-font-weight: 600; -fx-text-fill: #334155; -fx-font-size: 13px;" text="In-App Dashboard Alerts:" />
+                                                <CheckBox fx:id="reminderInterviewsCheck" style="-fx-font-size: 13px; -fx-text-fill: #334155; -fx-cursor: hand;" text="Display upcoming scheduled interview countdowns on Dashboard" />
+                                                <CheckBox fx:id="reminderDeadlinesCheck" style="-fx-font-size: 13px; -fx-text-fill: #334155; -fx-cursor: hand;" text="Highlight approaching application submission deadlines on Dashboard" />
+                                            </VBox>
+                                        </VBox>
+
+                                        <Separator style="-fx-opacity: 0.6;" />
+
+                                        <HBox spacing="14.0">
+                                            <Button onAction="#handleSavePreferences" prefHeight="38.0" style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-cursor: hand; -fx-padding: 8 22 8 22;" text="Save Preferences" />
+                                        </HBox>
+                                    </VBox>
+                                </content>
+                            </Tab>
+
+                            <!-- Tab 4: Account Information -->
+                            <Tab text="ℹ️ Account Information">
+                                <content>
+                                    <VBox spacing="20.0" style="-fx-padding: 24px;">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="System &amp; Account Overview" />
+                                        <Label style="-fx-font-size: 12.5px; -fx-text-fill: #64748b;" text="System metadata, authentication status, and session controls." />
+
+                                        <GridPane hgap="16.0" vgap="14.0" style="-fx-max-width: 600px; -fx-background-color: #f8fafc; -fx-padding: 18px; -fx-background-radius: 10px; -fx-border-color: #e2e8f0; -fx-border-radius: 10px; -fx-border-width: 1px;">
+                                            <columnConstraints>
+                                                <ColumnConstraints prefWidth="180.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" />
+                                            </columnConstraints>
+
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #475569;" text="Candidate Account:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                            <Label fx:id="infoAccountNameLabel" style="-fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Alex Mercer" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #475569;" text="Registered Email:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <Label fx:id="infoAccountEmailLabel" style="-fx-text-fill: #0f172a;" text="alex@applytrack.io" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #475569;" text="Account ID:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <Label fx:id="infoAccountIdLabel" style="-fx-text-fill: #0f172a;" text="1" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #475569;" text="Password Protection:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                            <Label style="-fx-text-fill: #16a34a; -fx-font-weight: bold;" text="Protected via BCrypt (10 Salt Rounds)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #475569;" text="Database Catalog:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                            <Label style="-fx-text-fill: #0f172a;" text="applytrack_db (MariaDB 12.3 / InnoDB)" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                                            <Label style="-fx-font-weight: 600; -fx-text-fill: #475569;" text="Tenant Isolation:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                            <Label style="-fx-text-fill: #0f172a;" text="Active (Zero Cross-User Data Exposure)" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                        </GridPane>
+
+                                        <Separator style="-fx-opacity: 0.6;" />
+
+                                        <VBox spacing="8.0" style="-fx-max-width: 600px; -fx-background-color: #fef2f2; -fx-padding: 18px; -fx-background-radius: 10px; -fx-border-color: #fecaca; -fx-border-radius: 10px; -fx-border-width: 1px;">
+                                            <Label style="-fx-font-size: 13.5px; -fx-font-weight: bold; -fx-text-fill: #991b1b;" text="Session Sign Out" />
+                                            <Label style="-fx-font-size: 12px; -fx-text-fill: #b91c1c;" text="Safely terminate your current session. All local cached views and credentials will be purged." wrapText="true" />
+                                            <HBox style="-fx-padding: 6 0 0 0;">
+                                                <Button onAction="#handleLogout" prefHeight="36.0" style="-fx-background-color: #dc2626; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12.5px; -fx-background-radius: 8px; -fx-cursor: hand; -fx-padding: 6 18 6 18;" text="Sign Out from ApplyTrack" />
+                                            </HBox>
+                                        </VBox>
+                                    </VBox>
+                                </content>
+                            </Tab>
+                        </tabs>
+                    </TabPane>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</StackPane>
+

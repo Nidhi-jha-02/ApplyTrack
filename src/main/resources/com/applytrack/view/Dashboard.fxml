@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.applytrack.controller.DashboardController">
+    <content>
+        <VBox spacing="20.0" style="-fx-padding: 8px;">
+            <!-- Welcome Banner with User Persona & Refresh Action -->
+            <HBox alignment="CENTER_LEFT" spacing="16.0" style="-fx-background-color: linear-gradient(to right, #4f46e5, #6366f1); -fx-background-radius: 12px; -fx-padding: 22px 24px;">
+                <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                    <Label fx:id="welcomeTitleLabel" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;" text="Welcome to ApplyTrack Intelligence" />
+                    <Label style="-fx-font-size: 13.5px; -fx-text-fill: #e0e7ff;" text="Centralized application tracking, deadline monitoring, and career analytics." />
+                </VBox>
+                <HBox alignment="CENTER_RIGHT" spacing="16.0">
+                    <VBox alignment="CENTER_RIGHT" spacing="2.0">
+                        <Label style="-fx-font-size: 11px; -fx-text-fill: #c7d2fe; -fx-font-weight: 600;" text="TODAY'S DATE" />
+                        <Label fx:id="currentDateLabel" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;" text="Tuesday, November 10, 2026" />
+                    </VBox>
+                    <Button fx:id="refreshBtn" onAction="#handleRefresh" style="-fx-background-color: rgba(255, 255, 255, 0.2); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8px; -fx-cursor: hand; -fx-padding: 8 16 8 16; -fx-font-size: 12.5px;" text="↻ Refresh" />
+                </HBox>
+            </HBox>
+
+            <!-- Status & Sync Notification Bar -->
+            <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-padding: 0 4 0 4;">
+                <Label fx:id="statusMessageLabel" style="-fx-font-size: 12px; -fx-text-fill: #64748b; -fx-font-weight: 500;" text="Dashboard synchronized with MariaDB database" />
+            </HBox>
+
+            <!-- 5 Dynamic KPI Metric Cards Grid -->
+            <GridPane hgap="16.0" vgap="16.0">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="20.0" />
+                    <ColumnConstraints percentWidth="20.0" />
+                    <ColumnConstraints percentWidth="20.0" />
+                    <ColumnConstraints percentWidth="20.0" />
+                    <ColumnConstraints percentWidth="20.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="110.0" prefHeight="115.0" />
+                </rowConstraints>
+
+                <!-- Card 1: Total Applications -->
+                <VBox spacing="6.0" styleClass="card, card-primary" GridPane.columnIndex="0">
+                    <Label styleClass="card-title" text="Total Applied" />
+                    <Label fx:id="totalAppsLabel" styleClass="card-value" text="0" />
+                    <Label styleClass="card-caption" text="All-time user records" />
+                </VBox>
+
+                <!-- Card 2: In Progress -->
+                <VBox spacing="6.0" styleClass="card, card-info" GridPane.columnIndex="1">
+                    <Label styleClass="card-title" text="In Progress" />
+                    <Label fx:id="inProgressLabel" styleClass="card-value" text="0" />
+                    <Label styleClass="card-caption" text="Review &amp; Shortlist" />
+                </VBox>
+
+                <!-- Card 3: Interviews Scheduled -->
+                <VBox spacing="6.0" styleClass="card, card-warning" GridPane.columnIndex="2">
+                    <Label styleClass="card-title" text="Interviews" />
+                    <Label fx:id="interviewsLabel" styleClass="card-value" text="0" />
+                    <Label styleClass="card-caption" text="Scheduled rounds" />
+                </VBox>
+
+                <!-- Card 4: Offers Received -->
+                <VBox spacing="6.0" styleClass="card, card-success" GridPane.columnIndex="3">
+                    <Label styleClass="card-title" text="Offers" />
+                    <Label fx:id="offersLabel" styleClass="card-value" text="0" />
+                    <Label styleClass="card-caption" text="Selected candidates" />
+                </VBox>
+
+                <!-- Card 5: Rejected Applications -->
+                <VBox spacing="6.0" styleClass="card, card-danger" GridPane.columnIndex="4">
+                    <Label styleClass="card-title" text="Rejected" />
+                    <Label fx:id="rejectedLabel" styleClass="card-value" text="0" />
+                    <Label styleClass="card-caption" text="Archived outcomes" />
+                </VBox>
+            </GridPane>
+
+            <!-- Visual Analytics Charts Grid: Status PieChart & Monthly Trend LineChart -->
+            <GridPane hgap="16.0">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50.0" />
+                    <ColumnConstraints percentWidth="50.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="320.0" />
+                </rowConstraints>
+
+                <!-- Status Distribution Pie Chart -->
+                <VBox spacing="10.0" styleClass="card" GridPane.columnIndex="0">
+                    <VBox spacing="2.0">
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Application Status Distribution" />
+                        <Label style="-fx-font-size: 12px; -fx-text-fill: #64748b;" text="Current status breakdown across your hiring pipeline" />
+                    </VBox>
+                    <StackPane minHeight="260.0" prefHeight="270.0" VBox.vgrow="ALWAYS">
+                        <PieChart fx:id="statusPieChart" animated="false" legendSide="BOTTOM" />
+                        <Label fx:id="statusPieEmptyLabel" styleClass="empty-state-text" text="No application status data available yet." visible="false" />
+                    </StackPane>
+                </VBox>
+
+                <!-- Monthly Submission Trends Line Chart -->
+                <VBox spacing="10.0" styleClass="card" GridPane.columnIndex="1">
+                    <VBox spacing="2.0">
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Monthly Application Velocity" />
+                        <Label style="-fx-font-size: 12px; -fx-text-fill: #64748b;" text="Number of job applications submitted over time" />
+                    </VBox>
+                    <StackPane minHeight="260.0" prefHeight="270.0" VBox.vgrow="ALWAYS">
+                        <LineChart fx:id="monthlyTrendChart" animated="false" createSymbols="true" legendVisible="false">
+                            <xAxis>
+                                <CategoryAxis fx:id="trendXAxis" label="Month" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="trendYAxis" autoRanging="true" label="Applications" minorTickVisible="false" tickUnit="1.0" />
+                            </yAxis>
+                        </LineChart>
+                        <Label fx:id="trendEmptyLabel" styleClass="empty-state-text" text="No submission history available yet." visible="false" />
+                    </StackPane>
+                </VBox>
+            </GridPane>
+
+            <!-- Operational Panels: Upcoming Deadlines & Upcoming Interviews -->
+            <GridPane hgap="16.0">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50.0" />
+                    <ColumnConstraints percentWidth="50.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="220.0" />
+                </rowConstraints>
+
+                <!-- Upcoming Deadlines Panel -->
+                <VBox spacing="12.0" styleClass="card" GridPane.columnIndex="0">
+                    <VBox spacing="2.0">
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Upcoming Deadlines" />
+                        <Label style="-fx-font-size: 12px; -fx-text-fill: #64748b;" text="Active application cutoffs sorted nearest first" />
+                    </VBox>
+                    <VBox fx:id="deadlinesContainer" minHeight="120.0" spacing="8.0" VBox.vgrow="ALWAYS" />
+                    <Label fx:id="deadlinesEmptyLabel" styleClass="empty-state-text" text="No upcoming deadlines. You are all caught up!" visible="false" />
+                </VBox>
+
+                <!-- Scheduled Interviews Panel -->
+                <VBox spacing="12.0" styleClass="card" GridPane.columnIndex="1">
+                    <VBox spacing="2.0">
+                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Scheduled Interviews" />
+                        <Label style="-fx-font-size: 12px; -fx-text-fill: #64748b;" text="Active interview rounds, proctors, and video meeting invites" />
+                    </VBox>
+                    <VBox fx:id="interviewsContainer" minHeight="120.0" spacing="8.0" VBox.vgrow="ALWAYS" />
+                    <Label fx:id="interviewsEmptyLabel" styleClass="empty-state-text" text="No interviews scheduled at this time." visible="false" />
+                </VBox>
+            </GridPane>
+
+            <!-- Quick Action Bar -->
+            <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="card">
+                <Label style="-fx-font-size: 13.5px; -fx-font-weight: bold; -fx-text-fill: #334155;" text="Quick Actions:" />
+                <Button onAction="#handleNewApplication" styleClass="btn-primary" text="+ Add New Application" />
+                <Button onAction="#handleViewInterviews" styleClass="btn-secondary" text="Interview Pipeline" />
+                <Button onAction="#handleViewRecruiters" styleClass="btn-secondary" text="Recruiter Directory" />
+                <Button onAction="#handleRefresh" styleClass="btn-secondary" text="↻ Refresh Analytics" />
+            </HBox>
+        </VBox>
+    </content>
+</ScrollPane>

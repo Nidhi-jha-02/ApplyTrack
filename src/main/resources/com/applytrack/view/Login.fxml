@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane alignment="CENTER" prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f1f5f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.applytrack.controller.LoginController">
+    <!-- Centered Login Card -->
+    <VBox alignment="CENTER" maxWidth="440.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-padding: 36px; -fx-effect: dropshadow(three-pass-box, rgba(15, 23, 42, 0.08), 16, 0, 0, 4); -fx-border-color: #e2e8f0; -fx-border-radius: 16px;">
+
+        <!-- Brand Header -->
+        <VBox alignment="CENTER" spacing="6.0">
+            <HBox alignment="CENTER" spacing="8.0">
+                <Label style="-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 6 12 6 12; -fx-background-radius: 8px;" text="AT" />
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="ApplyTrack" />
+            </HBox>
+            <Label style="-fx-font-size: 13px; -fx-text-fill: #64748b;" text="Job Application Intelligence System" />
+        </VBox>
+
+        <Separator opacity="0.4" />
+
+        <!-- Feedback & Notification Message Area -->
+        <Label fx:id="messageLabel" maxWidth="Infinity" wrapText="true" />
+
+        <!-- Input Form -->
+        <VBox spacing="14.0">
+            <!-- Email Input -->
+            <VBox spacing="6.0">
+                <Label style="-fx-font-size: 12.5px; -fx-font-weight: 600; -fx-text-fill: #334155;" text="Email Address" />
+                <TextField fx:id="emailField" promptText="you@university.edu or candidate@example.com" style="-fx-padding: 10px 12px; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-border-color: #cbd5e1; -fx-border-radius: 8px;" />
+            </VBox>
+
+            <!-- Password Input with Toggle -->
+            <VBox spacing="6.0">
+                <HBox alignment="CENTER_LEFT">
+                    <Label style="-fx-font-size: 12.5px; -fx-font-weight: 600; -fx-text-fill: #334155;" text="Password" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button fx:id="togglePasswordBtn" focusTraversable="false" onAction="#handleTogglePassword" style="-fx-background-color: transparent; -fx-text-fill: #4f46e5; -fx-font-size: 11.5px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 0;" text="Show" />
+                </HBox>
+                <StackPane alignment="CENTER_RIGHT">
+                    <PasswordField fx:id="passwordField" promptText="Enter your password" style="-fx-padding: 10px 12px; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-border-color: #cbd5e1; -fx-border-radius: 8px;" />
+                    <TextField fx:id="passwordVisibleField" promptText="Enter your password" style="-fx-padding: 10px 12px; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-border-color: #cbd5e1; -fx-border-radius: 8px;" />
+                </StackPane>
+            </VBox>
+        </VBox>
+
+        <!-- Submit Button -->
+        <Button fx:id="loginButton" defaultButton="true" maxWidth="Infinity" onAction="#handleLogin" styleClass="btn-primary" text="Sign In to ApplyTrack" />
+
+        <!-- Quick Demo Account Fill -->
+        <VBox alignment="CENTER" spacing="8.0">
+            <Separator opacity="0.3" />
+            <Button fx:id="demoLoginButton" focusTraversable="false" maxWidth="Infinity" onAction="#handleUseDemoAccount" style="-fx-background-color: #eef2ff; -fx-text-fill: #4338ca; -fx-font-weight: 600; -fx-font-size: 12px; -fx-padding: 8px; -fx-background-radius: 8px; -fx-border-color: #c7d2fe; -fx-border-radius: 8px; -fx-cursor: hand;" text="⚡ Fill Demo Account (Alex Mercer)" />
+        </VBox>
+
+        <!-- Register Link -->
+        <HBox alignment="CENTER" spacing="6.0">
+            <Label style="-fx-font-size: 13px; -fx-text-fill: #64748b;" text="Don't have an account?" />
+            <Button fx:id="registerLinkButton" focusTraversable="false" onAction="#handleGoToRegister" style="-fx-background-color: transparent; -fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 13px; -fx-cursor: hand; -fx-padding: 0;" text="Create Account" />
+        </HBox>
+    </VBox>
+</StackPane>
+

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane alignment="CENTER" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #f1f5f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.applytrack.controller.RegisterController">
+    <!-- Centered Registration Card -->
+    <VBox alignment="CENTER" maxWidth="460.0" spacing="18.0" style="-fx-background-color: white; -fx-background-radius: 16px; -fx-padding: 34px; -fx-effect: dropshadow(three-pass-box, rgba(15, 23, 42, 0.08), 16, 0, 0, 4); -fx-border-color: #e2e8f0; -fx-border-radius: 16px;">
+
+        <!-- Brand Header -->
+        <VBox alignment="CENTER" spacing="6.0">
+            <HBox alignment="CENTER" spacing="8.0">
+                <Label style="-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 6 12 6 12; -fx-background-radius: 8px;" text="AT" />
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="ApplyTrack" />
+            </HBox>
+            <Label style="-fx-font-size: 13.5px; -fx-font-weight: 600; -fx-text-fill: #1e293b;" text="Create Candidate Account" />
+            <Label style="-fx-font-size: 12px; -fx-text-fill: #64748b;" text="Centralize and manage your career applications" />
+        </VBox>
+
+        <Separator opacity="0.4" />
+
+        <!-- Feedback & Notification Message Area -->
+        <Label fx:id="messageLabel" maxWidth="Infinity" wrapText="true" />
+
+        <!-- Registration Form -->
+        <VBox spacing="12.0">
+            <!-- Full Name Input -->
+            <VBox spacing="5.0">
+                <Label style="-fx-font-size: 12.5px; -fx-font-weight: 600; -fx-text-fill: #334155;" text="Full Name" />
+                <TextField fx:id="fullNameField" promptText="e.g. Alex Mercer" style="-fx-padding: 9px 12px; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-border-color: #cbd5e1; -fx-border-radius: 8px;" />
+            </VBox>
+
+            <!-- Email Address Input -->
+            <VBox spacing="5.0">
+                <Label style="-fx-font-size: 12.5px; -fx-font-weight: 600; -fx-text-fill: #334155;" text="Email Address" />
+                <TextField fx:id="emailField" promptText="candidate@university.edu" style="-fx-padding: 9px 12px; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-border-color: #cbd5e1; -fx-border-radius: 8px;" />
+            </VBox>
+
+            <!-- Password Input -->
+            <VBox spacing="5.0">
+                <Label style="-fx-font-size: 12.5px; -fx-font-weight: 600; -fx-text-fill: #334155;" text="Password" />
+                <PasswordField fx:id="passwordField" promptText="Minimum 8 characters" style="-fx-padding: 9px 12px; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-border-color: #cbd5e1; -fx-border-radius: 8px;" />
+                <Label style="-fx-font-size: 11px; -fx-text-fill: #94a3b8;" text="Must contain at least 8 characters" />
+            </VBox>
+
+            <!-- Confirm Password Input -->
+            <VBox spacing="5.0">
+                <Label style="-fx-font-size: 12.5px; -fx-font-weight: 600; -fx-text-fill: #334155;" text="Confirm Password" />
+                <PasswordField fx:id="confirmPasswordField" promptText="Re-enter password" style="-fx-padding: 9px 12px; -fx-font-size: 13px; -fx-background-radius: 8px; -fx-border-color: #cbd5e1; -fx-border-radius: 8px;" />
+            </VBox>
+        </VBox>
+
+        <!-- Submit Button -->
+        <Button fx:id="registerButton" defaultButton="true" maxWidth="Infinity" onAction="#handleRegister" styleClass="btn-primary" text="Create Candidate Account" />
+
+        <!-- Back to Login Link -->
+        <HBox alignment="CENTER" spacing="6.0">
+            <Label style="-fx-font-size: 13px; -fx-text-fill: #64748b;" text="Already registered?" />
+            <Button fx:id="backToLoginButton" focusTraversable="false" onAction="#handleBackToLogin" style="-fx-background-color: transparent; -fx-text-fill: #4f46e5; -fx-font-weight: bold; -fx-font-size: 13px; -fx-cursor: hand; -fx-padding: 0;" text="Sign In" />
+        </HBox>
+    </VBox>
+</StackPane>
+

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="780.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.applytrack.controller.MainLayoutController">
+    <!-- Left Sidebar -->
+    <left>
+        <VBox styleClass="sidebar" BorderPane.alignment="CENTER">
+            <!-- Brand / Logo Area -->
+            <VBox styleClass="brand-container">
+                <HBox alignment="CENTER_LEFT" spacing="8.0">
+                    <Label style="-fx-background-color: #4f46e5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 4 8 4 8; -fx-background-radius: 6px;" text="AT" />
+                    <Label styleClass="brand-title" text="ApplyTrack" />
+                </HBox>
+                <Label styleClass="brand-subtitle" text="Job Application Intelligence" />
+            </VBox>
+
+            <!-- Navigation Links -->
+            <VBox spacing="4.0" styleClass="sidebar-nav" VBox.vgrow="ALWAYS">
+                <Button fx:id="navDashboardBtn" maxWidth="Infinity" onAction="#handleNavigation" styleClass="nav-button" text=" Dashboard" userData="dashboard" />
+                <Button fx:id="navApplicationsBtn" maxWidth="Infinity" onAction="#handleNavigation" styleClass="nav-button" text=" Job Applications" userData="applications" />
+                <Button fx:id="navInterviewsBtn" maxWidth="Infinity" onAction="#handleNavigation" styleClass="nav-button" text=" Interview Pipeline" userData="interviews" />
+                <Button fx:id="navRecruitersBtn" maxWidth="Infinity" onAction="#handleNavigation" styleClass="nav-button" text=" Recruiters" userData="recruiters" />
+                <Button fx:id="navAnalyticsBtn" maxWidth="Infinity" onAction="#handleNavigation" styleClass="nav-button" text=" Career Analytics" userData="analytics" />
+                <Button fx:id="navReportsBtn" maxWidth="Infinity" onAction="#handleNavigation" styleClass="nav-button" text=" Reports &amp; Export" userData="reports" />
+                
+                <Region VBox.vgrow="ALWAYS" />
+                <Separator opacity="0.15" />
+                <Button fx:id="navSettingsBtn" maxWidth="Infinity" onAction="#handleNavigation" styleClass="nav-button" text=" System Settings" userData="settings" />
+            </VBox>
+
+            <!-- Sidebar User Profile Footer with Logout Action -->
+            <VBox styleClass="sidebar-footer" spacing="8.0">
+                <VBox spacing="6.0" styleClass="user-profile-card">
+                    <HBox alignment="CENTER_LEFT">
+                        <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                            <Label fx:id="userProfileLabel" styleClass="user-name" text="Alex Mercer" />
+                            <Label fx:id="userEmailLabel" styleClass="user-role" text="alex@applytrack.io" />
+                        </VBox>
+                        <Button fx:id="logoutButton" focusTraversable="false" onAction="#handleLogout" style="-fx-background-color: transparent; -fx-text-fill: #f87171; -fx-font-size: 11px; -fx-font-weight: bold; -fx-border-color: #7f1d1d; -fx-border-radius: 4px; -fx-padding: 3 8 3 8; -fx-cursor: hand;" text="Sign Out" />
+                    </HBox>
+                </VBox>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Center Main Body -->
+    <center>
+        <BorderPane BorderPane.alignment="CENTER">
+            <!-- Top Header Bar -->
+            <top>
+                <HBox alignment="CENTER_LEFT" styleClass="top-header" BorderPane.alignment="CENTER">
+                    <VBox spacing="2.0">
+                        <Label fx:id="pageTitleLabel" styleClass="page-title" text="Dashboard" />
+                        <Label fx:id="pageSubtitleLabel" styleClass="page-subtitle" text="Overview &amp; Career Insights" />
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label fx:id="statusLabel" styleClass="status-badge" text="System: Authenticated | Session Active" />
+                </HBox>
+            </top>
+
+            <!-- Dynamic Content Area -->
+            <center>
+                <StackPane fx:id="contentArea" styleClass="content-area" BorderPane.alignment="CENTER" />
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>

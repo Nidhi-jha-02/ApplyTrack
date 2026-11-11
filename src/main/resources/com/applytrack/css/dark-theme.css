@@ -1,0 +1,221 @@
+/* ===================================================================
+   ApplyTrack — Dark Theme Stylesheet (Phase 11)
+   High-contrast, eye-friendly dark palette for professional low-light use
+   Primary Palette: Midnight Background (#0b0f19), Panel Slate (#111827),
+   Border Gray (#1f2937), Text Primary (#f9fafb), Text Muted (#9ca3af)
+   =================================================================== */
+
+.root {
+    -fx-background-color: #0b0f19;
+}
+
+.content-area {
+    -fx-background-color: #0b0f19;
+}
+
+/* -------------------------------------------------------------
+   Top Bar / Header
+   ------------------------------------------------------------- */
+.top-header {
+    -fx-background-color: #111827;
+    -fx-border-color: #1f2937;
+}
+
+.page-title {
+    -fx-text-fill: #f9fafb;
+}
+
+.page-subtitle {
+    -fx-text-fill: #9ca3af;
+}
+
+.status-badge {
+    -fx-background-color: #1e1b4b;
+    -fx-text-fill: #a5b4fc;
+    -fx-border-color: #312e81;
+}
+
+/* -------------------------------------------------------------
+   Cards, Panels, and Containers
+   ------------------------------------------------------------- */
+.card, .chart-card, .kpi-card, .metric-card {
+    -fx-background-color: #111827;
+    -fx-border-color: #1f2937;
+}
+
+.scroll-pane, .scroll-pane > .viewport {
+    -fx-background-color: #0b0f19;
+    -fx-background: #0b0f19;
+}
+
+/* -------------------------------------------------------------
+   Typography & Labels
+   ------------------------------------------------------------- */
+.card-title, .section-title {
+    -fx-text-fill: #f9fafb;
+}
+
+.card-subtitle, .section-subtitle, .helper-text {
+    -fx-text-fill: #9ca3af;
+}
+
+.kpi-value {
+    -fx-text-fill: #f9fafb;
+}
+
+.kpi-label {
+    -fx-text-fill: #9ca3af;
+}
+
+/* -------------------------------------------------------------
+   Form Inputs & Controls
+   ------------------------------------------------------------- */
+.text-field, .password-field, .text-area {
+    -fx-background-color: #1f2937;
+    -fx-text-fill: #f9fafb;
+    -fx-border-color: #374151;
+    -fx-prompt-text-fill: #6b7280;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused {
+    -fx-border-color: #6366f1;
+    -fx-background-color: #1f2937;
+}
+
+.combo-box {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #374151;
+}
+
+.combo-box .cell, .combo-box .list-cell {
+    -fx-text-fill: #f9fafb;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #111827;
+    -fx-border-color: #374151;
+}
+
+.combo-box-popup .list-cell:filled:hover {
+    -fx-background-color: #374151;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box-popup .list-cell:filled:selected {
+    -fx-background-color: #4f46e5;
+    -fx-text-fill: #ffffff;
+}
+
+.date-picker {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #374151;
+}
+
+.check-box {
+    -fx-text-fill: #e5e7eb;
+}
+
+.check-box .box {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #4b5563;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #4f46e5;
+}
+
+/* -------------------------------------------------------------
+   TableViews in Dark Mode
+   ------------------------------------------------------------- */
+.table-view {
+    -fx-background-color: #111827;
+    -fx-border-color: #1f2937;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #1f2937;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #374151;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #e5e7eb;
+}
+
+.table-row-cell {
+    -fx-background-color: #111827;
+    -fx-border-color: #1f2937;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #161f30;
+}
+
+.table-row-cell:filled:hover {
+    -fx-background-color: #1e293b;
+}
+
+.table-row-cell:filled:selected {
+    -fx-background-color: #312e81;
+}
+
+.table-cell {
+    -fx-text-fill: #f3f4f6;
+}
+
+/* -------------------------------------------------------------
+   TabPane & Segmented Tabs
+   ------------------------------------------------------------- */
+.tab-pane .tab-header-area {
+    -fx-background-color: #111827;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: #111827;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #1f2937;
+    -fx-background-radius: 8px 8px 0 0;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #4f46e5;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: #cbd5e1;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* -------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------- */
+.btn-secondary {
+    -fx-background-color: #1f2937;
+    -fx-border-color: #374151;
+    -fx-text-fill: #e5e7eb;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #374151;
+    -fx-text-fill: #ffffff;
+}
+
+.btn-primary {
+    -fx-background-color: #4f46e5;
+    -fx-text-fill: #ffffff;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #4338ca;
+}
+

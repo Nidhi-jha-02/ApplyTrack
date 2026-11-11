@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefWidth="660.0" spacing="18.0" style="-fx-padding: 24px; -fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.applytrack.controller.InterviewDialogController">
+    <!-- Header -->
+    <VBox spacing="4.0">
+        <Label fx:id="dialogTitleLabel" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0f172a;" text="Schedule Interview Round" />
+        <Label style="-fx-font-size: 13px; -fx-text-fill: #64748b;" text="Record assessment details, video conferencing links, interviewer contact and outcomes" />
+    </VBox>
+
+    <!-- Error Banner -->
+    <Label fx:id="errorLabel" managed="false" style="-fx-background-color: #fee2e2; -fx-text-fill: #b91c1c; -fx-font-weight: bold; -fx-padding: 8 12 8 12; -fx-background-radius: 6px; -fx-font-size: 12.5px;" text="Validation error placeholder" visible="false" wrapText="true" />
+
+    <!-- Form Grid -->
+    <GridPane hgap="16.0" vgap="14.0">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="50.0" />
+            <ColumnConstraints percentWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
+
+        <!-- Application Selector (Required) -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+            <Label styleClass="form-label" text="Job Application *" />
+            <ComboBox fx:id="applicationBox" maxWidth="Infinity" promptText="Select target job application..." />
+        </VBox>
+
+        <!-- Round Name (Required) -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label styleClass="form-label" text="Interview Round Name *" />
+            <TextField fx:id="roundField" promptText="e.g. Round 1: OA, Technical Screen, System Design" />
+        </VBox>
+
+        <!-- Interview Mode -->
+        <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label styleClass="form-label" text="Interview Mode" />
+            <ComboBox fx:id="modeBox" maxWidth="Infinity" />
+        </VBox>
+
+        <!-- Interview Date (Required) -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+            <Label styleClass="form-label" text="Interview Date *" />
+            <DatePicker fx:id="datePicker" maxWidth="Infinity" promptText="YYYY-MM-DD" />
+        </VBox>
+
+        <!-- Interview Time (Required) -->
+        <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label styleClass="form-label" text="Interview Time (24h or 12h format) *" />
+            <ComboBox fx:id="timeBox" editable="true" maxWidth="Infinity" promptText="e.g. 14:30 or 02:30 PM" />
+        </VBox>
+
+        <!-- Outcome Status -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+            <Label styleClass="form-label" text="Interview Outcome / Status" />
+            <ComboBox fx:id="outcomeBox" maxWidth="Infinity" />
+        </VBox>
+
+        <!-- Interviewer Name -->
+        <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label styleClass="form-label" text="Interviewer Name / Panel (Optional)" />
+            <TextField fx:id="interviewerField" promptText="e.g. Alex Rivera (Tech Lead)" />
+        </VBox>
+
+        <!-- Video Meeting URL -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
+            <Label styleClass="form-label" text="Video Call / Meeting URL (Optional)" />
+            <TextField fx:id="meetingLinkField" promptText="https://meet.google.com/xyz or Zoom link" />
+        </VBox>
+
+        <!-- Physical Location -->
+        <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Label styleClass="form-label" text="Interview Location / Campus (Optional)" />
+            <TextField fx:id="locationField" promptText="e.g. Building 2, Floor 4 or Remote" />
+        </VBox>
+
+        <!-- Feedback & Notes -->
+        <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <Label styleClass="form-label" text="Feedback, Questions Asked &amp; Preparation Notes (Optional)" />
+            <TextArea fx:id="feedbackArea" prefRowCount="4" promptText="Coding problems given, behavioral questions, interviewer feedback, prep topics..." wrapText="true" />
+        </VBox>
+    </GridPane>
+
+    <!-- Bottom Actions -->
+    <HBox alignment="CENTER_RIGHT" spacing="12.0" style="-fx-padding: 8 0 0 0;">
+        <Button fx:id="cancelBtn" onAction="#handleCancel" styleClass="btn-secondary" text="Cancel" />
+        <Button fx:id="saveBtn" onAction="#handleSave" styleClass="btn-primary" text="Save Interview Round" />
+    </HBox>
+</VBox>
+

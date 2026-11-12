@@ -146,6 +146,8 @@ public class RecruiterDialogController implements Initializable {
             companyBox.setItems(FXCollections.observableArrayList(companies));
             if (!companies.isEmpty()) {
                 companyBox.setValue(companies.get(0));
+            } else {
+                showError("No companies found in your pipeline. In ApplyTrack, recruiters are associated with companies from your applications. Please create a job application first.");
             }
         } catch (SQLException e) {
             System.err.println("Error loading accessible companies: " + e.getMessage());

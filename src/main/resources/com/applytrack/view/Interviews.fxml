@@ -7,8 +7,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -27,12 +30,53 @@
         </HBox>
     </HBox>
 
+    <!-- 4 KPI Summary Metric Cards -->
+    <GridPane hgap="16.0" vgap="16.0">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="25.0" />
+            <ColumnConstraints percentWidth="25.0" />
+            <ColumnConstraints percentWidth="25.0" />
+            <ColumnConstraints percentWidth="25.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="95.0" prefHeight="100.0" />
+        </rowConstraints>
+
+        <!-- Card 1: Total Interviews -->
+        <VBox spacing="4.0" styleClass="card, card-primary" GridPane.columnIndex="0">
+            <Label styleClass="card-title" text="Total Interviews" />
+            <Label fx:id="totalInterviewsCardLabel" styleClass="card-value" text="0" />
+            <Label styleClass="card-caption" text="All scheduled &amp; past rounds" />
+        </VBox>
+
+        <!-- Card 2: Upcoming Rounds -->
+        <VBox spacing="4.0" styleClass="card, card-warning" GridPane.columnIndex="1">
+            <Label styleClass="card-title" text="Upcoming Rounds" />
+            <Label fx:id="upcomingCardLabel" styleClass="card-value" text="0" />
+            <Label styleClass="card-caption" text="Pending technical &amp; HR screens" />
+        </VBox>
+
+        <!-- Card 3: Completed / Past -->
+        <VBox spacing="4.0" styleClass="card, card-info" GridPane.columnIndex="2">
+            <Label styleClass="card-title" text="Completed / Past" />
+            <Label fx:id="completedCardLabel" styleClass="card-value" text="0" />
+            <Label styleClass="card-caption" text="Concluded evaluations" />
+        </VBox>
+
+        <!-- Card 4: Passed / Cleared -->
+        <VBox spacing="4.0" styleClass="card, card-success" GridPane.columnIndex="3">
+            <Label styleClass="card-title" text="Passed / Cleared" />
+            <Label fx:id="passedCardLabel" styleClass="card-value" text="0" />
+            <Label styleClass="card-caption" text="Successful round outcomes" />
+        </VBox>
+    </GridPane>
+
     <!-- Search, Filter & Sort Controls Card -->
     <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="card" style="-fx-padding: 12px 16px;">
-        <TextField fx:id="searchField" maxWidth="320.0" promptText="Search company, role, round, interviewer..." HBox.hgrow="ALWAYS" />
-        <ComboBox fx:id="timelineFilterBox" prefWidth="160.0" promptText="Timeline Filter" />
-        <ComboBox fx:id="outcomeFilterBox" prefWidth="160.0" promptText="Outcome Filter" />
-        <ComboBox fx:id="sortByBox" prefWidth="200.0" promptText="Sort Interviews" />
+        <TextField fx:id="searchField" maxWidth="320.0" promptText="Search company, role, round, interviewer, notes..." HBox.hgrow="ALWAYS" />
+        <ComboBox fx:id="timelineFilterBox" prefWidth="170.0" promptText="Timeline Filter" />
+        <ComboBox fx:id="outcomeFilterBox" prefWidth="170.0" promptText="Outcome Filter" />
+        <ComboBox fx:id="sortByBox" prefWidth="220.0" promptText="Sort Interviews" />
         <Button fx:id="resetFiltersBtn" onAction="#handleResetFilters" styleClass="btn-secondary" text="Reset Filters" />
     </HBox>
 
@@ -45,13 +89,13 @@
     <StackPane VBox.vgrow="ALWAYS">
         <TableView fx:id="interviewsTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="companyCol" prefWidth="180.0" text="Company" />
-                <TableColumn fx:id="roleCol" prefWidth="170.0" text="Job Role" />
-                <TableColumn fx:id="roundCol" prefWidth="190.0" text="Round Name" />
-                <TableColumn fx:id="dateTimeCol" prefWidth="170.0" text="Date &amp; Time" />
-                <TableColumn fx:id="modeCol" prefWidth="110.0" text="Mode" />
-                <TableColumn fx:id="outcomeCol" prefWidth="130.0" text="Outcome" />
-                <TableColumn fx:id="interviewerCol" prefWidth="160.0" text="Interviewer / Details" />
+                <TableColumn fx:id="companyCol" prefWidth="170.0" text="Company" />
+                <TableColumn fx:id="roleCol" prefWidth="160.0" text="Job Role" />
+                <TableColumn fx:id="roundCol" prefWidth="180.0" text="Round Name" />
+                <TableColumn fx:id="dateTimeCol" prefWidth="160.0" text="Date &amp; Time" />
+                <TableColumn fx:id="modeCol" prefWidth="100.0" text="Mode" />
+                <TableColumn fx:id="outcomeCol" prefWidth="120.0" text="Outcome" />
+                <TableColumn fx:id="interviewerCol" prefWidth="170.0" text="Interviewer / Details" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" />
@@ -60,7 +104,7 @@
 
         <!-- Empty State Container -->
         <VBox fx:id="emptyStateContainer" alignment="CENTER" spacing="12.0" styleClass="empty-state-container" visible="false">
-            <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #334155;" text="No Interviews Scheduled" />
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #334155;" text="No Interviews Found" />
             <Label styleClass="empty-state-text" text="There are no interview rounds matching your current search or filter criteria." />
             <Button onAction="#handleScheduleInterview" styleClass="btn-primary" text="+ Schedule an Interview Now" />
         </VBox>
@@ -76,4 +120,3 @@
         <Button fx:id="deleteBtn" disable="true" onAction="#handleDeleteInterview" styleClass="btn-danger" text="Delete Interview" />
     </HBox>
 </VBox>
-

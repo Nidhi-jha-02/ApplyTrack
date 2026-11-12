@@ -102,5 +102,20 @@ public interface RecruiterRepository {
      * Checks if a company is accessible to the user (i.e. the user has an application for this company).
      */
     boolean isCompanyAccessibleToUser(int companyId, int userId) throws SQLException;
+
+    /**
+     * Counts distinct companies represented in the user's accessible recruiter directory.
+     */
+    int countDistinctCompaniesByUserId(int userId) throws SQLException;
+
+    /**
+     * Counts the user's applications that currently have an assigned recruiter.
+     */
+    int countLinkedApplicationsByUserId(int userId) throws SQLException;
+
+    /**
+     * Counts recruiters in user's directory having direct contact info (email or phone).
+     */
+    int countDirectContactsByUserId(int userId) throws SQLException;
 }
 

@@ -214,6 +214,32 @@ class JdbcRecruiterRepositoryLiveTest {
 
         int strangerCount = repo.countRecruitersByUserId(STRANGER_USER_ID);
         assertEquals(0, strangerCount, "Stranger should have 0 accessible recruiters");
+
+        int distinctCompanies = repo.countDistinctCompaniesByUserId(DEMO_USER_ID);
+        assertTrue(distinctCompanies >= 1, "Demo user should have at least 1 distinct connected company");
+
+        int linkedAppsCount = repo.countLinkedApplicationsByUserId(DEMO_USER_ID);
+        assertTrue(linkedAppsCount >= 1, "Demo user should have at least 1 linked application");
+
+        int directContacts = repo.countDirectContactsByUserId(DEMO_USER_ID);
+        assertTrue(directContacts >= 1, "Demo user should have direct contacts");
+    }
+
+    @Test
+    @DisplayName("11. findWithFilters() matches keyword across notes and linkedin profile")
+    void testFindWithFiltersNotesAndKeyword() throws SQLException {
+        // Search by keyword that appears in notes or company
+        List<Recruiter> notesMatch = repo.findWithFilters(DEMO_USER_ID, "Campus", null, "name", true);
+        assertNotNull(notesMatch);
+        assertFalse(notesMatch.isEmpty(), "Search for 'Campus' in notes/designation must return matches");
+
+        // Filter by specific company
+        List<Recruiter> companyFiltered = repo.findWithFilters(DEMO_USER_ID, null, 1, "name", true);
+        assertNotNull(companyFiltered);
+        assertFalse(companyFiltered.isEmpty(), "Filtering by Google (ID: 1) should return recruiters");
+        for (Recruiter r : companyFiltered) {
+            assertEquals(Integer.valueOf(1), r.getCompanyId());
+        }
     }
 }
 

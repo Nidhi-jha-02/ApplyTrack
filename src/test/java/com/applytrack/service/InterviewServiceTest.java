@@ -420,6 +420,23 @@ class InterviewServiceTest {
                     .filter(i -> i.getInterviewDate().isAfter(now) && i.getOutcome() == InterviewOutcome.SCHEDULED)
                     .count();
         }
+
+        @Override
+        public int countCompletedByUserId(int userId) {
+            LocalDateTime now = LocalDateTime.now();
+            return (int) storage.stream()
+                    .filter(i -> i.getApplication() != null && i.getApplication().getUserId() == userId)
+                    .filter(i -> i.getInterviewDate().isBefore(now) || i.getOutcome() != InterviewOutcome.SCHEDULED)
+                    .count();
+        }
+
+        @Override
+        public int countPassedByUserId(int userId) {
+            return (int) storage.stream()
+                    .filter(i -> i.getApplication() != null && i.getApplication().getUserId() == userId)
+                    .filter(i -> i.getOutcome() == InterviewOutcome.PASSED)
+                    .count();
+        }
     }
 
     private static class InMemoryApplicationRepository implements ApplicationRepository {

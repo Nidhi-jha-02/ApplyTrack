@@ -300,8 +300,10 @@ public class JdbcRecruiterRepository implements RecruiterRepository {
         params.add(userId);
 
         if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-            sql.append("AND (LOWER(r.recruiter_name) LIKE ? OR LOWER(r.email) LIKE ? OR LOWER(r.phone) LIKE ? OR LOWER(c.company_name) LIKE ?) ");
+            sql.append("AND (LOWER(r.recruiter_name) LIKE ? OR LOWER(r.email) LIKE ? OR LOWER(r.phone) LIKE ? OR LOWER(c.company_name) LIKE ? OR LOWER(r.notes) LIKE ? OR LOWER(r.linkedin_url) LIKE ?) ");
             String pattern = "%" + searchKeyword.trim().toLowerCase() + "%";
+            params.add(pattern);
+            params.add(pattern);
             params.add(pattern);
             params.add(pattern);
             params.add(pattern);
@@ -360,6 +362,54 @@ public class JdbcRecruiterRepository implements RecruiterRepository {
                 if (rs.next()) {
                     return rs.getInt(1);
                 }
+            }
+            return 0;
+        } finally {
+            releaseConnection(conn);
+        }
+    }
+
+    @Override
+    public int countDistinctCompaniesByUserId(int userId) throws SQLException {
+        String sql = "SELECT COUNT(DISTINCT r.company_id) FROM recruiters r " + USER_SCOPE_CLAUSE + " AND r.company_id IS NOT NULL";
+        Connection conn = acquireConnection();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+            return 0;
+        } finally {
+            releaseConnection(conn);
+        }
+    }
+
+    @Override
+    public int countLinkedApplicationsByUserId(int userId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM applications WHERE user_id = ? AND recruiter_id IS NOT NULL";
+        Connection conn = acquireConnection();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+            return 0;
+        } finally {
+            releaseConnection(conn);
+        }
+    }
+
+    @Override
+    public int countDirectContactsByUserId(int userId) throws SQLException {
+        String sql = "SELECT COUNT(DISTINCT r.recruiter_id) FROM recruiters r " + USER_SCOPE_CLAUSE +
+                     "AND ((r.email IS NOT NULL AND r.email != '') OR (r.phone IS NOT NULL AND r.phone != ''))";
+        Connection conn = acquireConnection();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
             }
             return 0;
         } finally {

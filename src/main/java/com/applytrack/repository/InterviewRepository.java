@@ -101,5 +101,15 @@ public interface InterviewRepository {
      * Counts upcoming scheduled interviews for the user.
      */
     int countUpcomingByUserId(int userId) throws SQLException;
+
+    /**
+     * Counts completed or past interviews for the user.
+     */
+    int countCompletedByUserId(int userId) throws SQLException;
+
+    /**
+     * Counts interviews with outcome PASSED for the user.
+     */
+    int countPassedByUserId(int userId) throws SQLException;
 }
 

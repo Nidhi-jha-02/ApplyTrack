@@ -345,24 +345,36 @@ public class JdbcInterviewRepository implements InterviewRepository {
         params.add(userId);
 
         if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-            sql.append("AND (LOWER(i.round_name) LIKE ? OR LOWER(c.company_name) LIKE ? OR LOWER(a.job_role) LIKE ? OR LOWER(i.interviewer_name) LIKE ?) ");
+            sql.append("AND (LOWER(i.round_name) LIKE ? OR LOWER(c.company_name) LIKE ? OR LOWER(a.job_role) LIKE ? OR LOWER(i.interviewer_name) LIKE ? OR LOWER(i.interview_location) LIKE ? OR LOWER(i.meeting_link) LIKE ? OR LOWER(i.feedback) LIKE ? OR LOWER(i.outcome) LIKE ?) ");
             String pattern = "%" + searchKeyword.trim().toLowerCase() + "%";
-            params.add(pattern);
-            params.add(pattern);
-            params.add(pattern);
-            params.add(pattern);
+            for (int k = 0; k < 8; k++) {
+                params.add(pattern);
+            }
         }
 
-        if (outcomeFilter != null && !outcomeFilter.equalsIgnoreCase("All") && !outcomeFilter.trim().isEmpty()) {
+        // Outcome filter: ignore if null, empty, or starting with "all" (e.g. "All", "All Outcomes")
+        if (outcomeFilter != null && !outcomeFilter.trim().isEmpty() && !outcomeFilter.trim().toLowerCase().startsWith("all")) {
+            InterviewOutcome matchedOutcome = null;
+            for (InterviewOutcome o : InterviewOutcome.values()) {
+                if (o.name().equalsIgnoreCase(outcomeFilter.trim()) || o.getDisplayName().equalsIgnoreCase(outcomeFilter.trim())) {
+                    matchedOutcome = o;
+                    break;
+                }
+            }
             sql.append("AND i.outcome = ? ");
-            params.add(outcomeFilter.trim());
+            params.add(matchedOutcome != null ? matchedOutcome.getDisplayName() : outcomeFilter.trim());
         }
 
-        if (timelineFilter != null && !timelineFilter.equalsIgnoreCase("All") && !timelineFilter.trim().isEmpty()) {
-            if ("Upcoming".equalsIgnoreCase(timelineFilter.trim())) {
-                sql.append("AND i.interview_date >= NOW() AND i.outcome = 'Scheduled' ");
-            } else if ("Completed".equalsIgnoreCase(timelineFilter.trim()) || "Past".equalsIgnoreCase(timelineFilter.trim())) {
-                sql.append("AND (i.interview_date < NOW() OR i.outcome != 'Scheduled') ");
+        // Timeline filter: ignore if null, empty, or starting with "all" (e.g. "All", "All Interviews")
+        if (timelineFilter != null && !timelineFilter.trim().isEmpty() && !timelineFilter.trim().toLowerCase().startsWith("all")) {
+            String tl = timelineFilter.trim().toLowerCase();
+            Timestamp nowTs = Timestamp.valueOf(LocalDateTime.now());
+            if (tl.contains("upcoming")) {
+                sql.append("AND (i.interview_date >= ? OR i.outcome = 'Scheduled') ");
+                params.add(nowTs);
+            } else if (tl.contains("completed") || tl.contains("past")) {
+                sql.append("AND (i.interview_date < ? OR i.outcome IN ('Passed', 'Failed', 'Cancelled')) ");
+                params.add(nowTs);
             }
         }
 
@@ -385,6 +397,10 @@ public class JdbcInterviewRepository implements InterviewRepository {
                     stmt.setInt(idx + 1, intVal);
                 } else if (val instanceof String strVal) {
                     stmt.setString(idx + 1, strVal);
+                } else if (val instanceof Timestamp tsVal) {
+                    stmt.setTimestamp(idx + 1, tsVal);
+                } else {
+                    stmt.setObject(idx + 1, val);
                 }
             }
 
@@ -424,7 +440,49 @@ public class JdbcInterviewRepository implements InterviewRepository {
     public int countUpcomingByUserId(int userId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM interviews i " +
                      "JOIN applications a ON i.application_id = a.application_id " +
-                     "WHERE a.user_id = ? AND i.interview_date >= NOW() AND i.outcome = 'Scheduled'";
+                     "WHERE a.user_id = ? AND (i.outcome = 'Scheduled' OR (i.interview_date >= ? AND i.outcome NOT IN ('Passed', 'Failed', 'Cancelled')))";
+
+        Connection conn = acquireConnection();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+            return 0;
+        } finally {
+            releaseConnection(conn);
+        }
+    }
+
+    @Override
+    public int countCompletedByUserId(int userId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM interviews i " +
+                     "JOIN applications a ON i.application_id = a.application_id " +
+                     "WHERE a.user_id = ? AND (i.outcome IN ('Passed', 'Failed', 'Cancelled') OR (i.interview_date < ? AND i.outcome != 'Scheduled'))";
+
+        Connection conn = acquireConnection();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+            return 0;
+        } finally {
+            releaseConnection(conn);
+        }
+    }
+
+    @Override
+    public int countPassedByUserId(int userId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM interviews i " +
+                     "JOIN applications a ON i.application_id = a.application_id " +
+                     "WHERE a.user_id = ? AND i.outcome = 'Passed'";
 
         Connection conn = acquireConnection();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {

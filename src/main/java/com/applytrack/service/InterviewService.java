@@ -282,6 +282,30 @@ public class InterviewService {
     }
 
     /**
+     * Returns completed/past interview count for the user.
+     */
+    public int getCompletedInterviewCount(int userId) {
+        if (userId <= 0) return 0;
+        try {
+            return interviewRepository.countCompletedByUserId(userId);
+        } catch (SQLException e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Returns passed interview count for the user.
+     */
+    public int getPassedInterviewCount(int userId) {
+        if (userId <= 0) return 0;
+        try {
+            return interviewRepository.countPassedByUserId(userId);
+        } catch (SQLException e) {
+            return 0;
+        }
+    }
+
+    /**
      * Validates required interview fields and URL formats.
      */
     private void validateInterviewInput(String roundName, LocalDateTime interviewDate, String meetingLink)

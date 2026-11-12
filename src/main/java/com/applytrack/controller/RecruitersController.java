@@ -69,6 +69,11 @@ public class RecruitersController implements Initializable {
     @FXML private Button addRecruiterBtn;
     @FXML private Button refreshBtn;
 
+    @FXML private Label totalRecruitersCardLabel;
+    @FXML private Label companiesConnectedCardLabel;
+    @FXML private Label activeAppsCardLabel;
+    @FXML private Label directContactsCardLabel;
+
     @FXML private TextField searchField;
     @FXML private ComboBox<String> companyFilterBox;
     @FXML private ComboBox<String> sortByBox;
@@ -330,6 +335,23 @@ public class RecruitersController implements Initializable {
             updateEmptyState();
 
             int total = recruiterService.getRecruiterCount(userId);
+            int companies = recruiterService.getDistinctCompaniesCount(userId);
+            int linkedApps = recruiterService.getLinkedApplicationsCount(userId);
+            int directContacts = recruiterService.getDirectContactsCount(userId);
+
+            if (totalRecruitersCardLabel != null) {
+                totalRecruitersCardLabel.setText(String.valueOf(total));
+            }
+            if (companiesConnectedCardLabel != null) {
+                companiesConnectedCardLabel.setText(String.valueOf(companies));
+            }
+            if (activeAppsCardLabel != null) {
+                activeAppsCardLabel.setText(String.valueOf(linkedApps));
+            }
+            if (directContactsCardLabel != null) {
+                directContactsCardLabel.setText(String.valueOf(directContacts));
+            }
+
             if (recordCountBadge != null) {
                 recordCountBadge.setText(total + (total == 1 ? " Recruiter" : " Recruiters"));
             }
@@ -352,7 +374,9 @@ public class RecruitersController implements Initializable {
     private void updateEmptyState() {
         boolean isEmpty = masterData.isEmpty();
         emptyStateContainer.setVisible(isEmpty);
+        emptyStateContainer.setManaged(isEmpty);
         recruitersTable.setVisible(!isEmpty);
+        recruitersTable.setManaged(!isEmpty);
     }
 
     @FXML
@@ -419,6 +443,7 @@ public class RecruitersController implements Initializable {
             try {
                 boolean deleted = recruiterService.deleteRecruiter(selected.getId(), userId);
                 if (deleted) {
+                    recruitersTable.getSelectionModel().clearSelection();
                     loadRecruitersAsync();
                     showAlert(Alert.AlertType.INFORMATION, "Deleted", "Recruiter " + selected.getRecruiterName() + " was deleted successfully.");
                 } else {

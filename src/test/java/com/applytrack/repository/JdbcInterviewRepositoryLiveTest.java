@@ -246,6 +246,49 @@ class JdbcInterviewRepositoryLiveTest {
 
         int strangerCount = repo.countInterviewsByUserId(STRANGER_USER_ID);
         assertEquals(0, strangerCount, "Stranger should have 0 total interviews");
+
+        int completed = repo.countCompletedByUserId(DEMO_USER_ID);
+        assertTrue(completed >= 0, "Completed count should be >= 0");
+
+        int passed = repo.countPassedByUserId(DEMO_USER_ID);
+        assertTrue(passed >= 0, "Passed count should be >= 0");
+    }
+
+    @Test
+    @DisplayName("12. findWithFilters() with UI defaults 'All Outcomes' and 'All Interviews' returns all records without 0-result bug")
+    void testFindWithFiltersUiDefaults() throws SQLException {
+        // This directly verifies the fix for the UI bug where "All Outcomes" returned 0 records
+        List<Interview> all = repo.findWithFilters(DEMO_USER_ID, null, "All Outcomes", "All Interviews", "date", true);
+        assertNotNull(all);
+        int totalExpected = repo.countInterviewsByUserId(DEMO_USER_ID);
+        assertEquals(totalExpected, all.size(), "findWithFilters with 'All Outcomes' must return all " + totalExpected + " interviews");
+
+        // Verify with case variations and blank strings
+        List<Interview> caseInsensitive = repo.findWithFilters(DEMO_USER_ID, "", "ALL", "ALL", "date", false);
+        assertEquals(totalExpected, caseInsensitive.size());
+    }
+
+    @Test
+    @DisplayName("13. findWithFilters() with timeline and outcome UI strings works reliably")
+    void testFindWithFiltersTimelineAndOutcome() throws SQLException {
+        // UI uses "Upcoming Interviews" and "Completed / Past"
+        List<Interview> upcoming = repo.findWithFilters(DEMO_USER_ID, null, "All Outcomes", "Upcoming Interviews", "date", true);
+        assertNotNull(upcoming);
+
+        List<Interview> completed = repo.findWithFilters(DEMO_USER_ID, null, "All Outcomes", "Completed / Past", "date", true);
+        assertNotNull(completed);
+        assertFalse(completed.isEmpty(), "Demo user should have completed interviews");
+
+        // UI outcome selection "Passed"
+        List<Interview> passed = repo.findWithFilters(DEMO_USER_ID, null, "Passed", "All Interviews", "date", true);
+        assertNotNull(passed);
+        for (Interview i : passed) {
+            assertEquals(InterviewOutcome.PASSED, i.getOutcome());
+        }
+
+        // Search by location and feedback keywords
+        List<Interview> feedbackSearch = repo.findWithFilters(DEMO_USER_ID, "Dijkstra", "All Outcomes", "All Interviews", "date", true);
+        assertFalse(feedbackSearch.isEmpty(), "Search for 'Dijkstra' in feedback must return matches");
     }
 }
 

@@ -432,6 +432,30 @@ class RecruiterServiceTest {
             return appRepo.storage.stream().anyMatch(a -> a.getUserId() == userId && a.getCompanyId() == companyId);
         }
 
+        @Override
+        public int countDistinctCompaniesByUserId(int userId) {
+            return (int) storage.stream()
+                    .filter(r -> isRecruiterAccessibleToUser(r, userId) && r.getCompanyId() != null)
+                    .map(Recruiter::getCompanyId)
+                    .distinct()
+                    .count();
+        }
+
+        @Override
+        public int countLinkedApplicationsByUserId(int userId) {
+            return (int) appRepo.storage.stream()
+                    .filter(a -> a.getUserId() == userId && a.getRecruiterId() != null)
+                    .count();
+        }
+
+        @Override
+        public int countDirectContactsByUserId(int userId) {
+            return (int) storage.stream()
+                    .filter(r -> isRecruiterAccessibleToUser(r, userId))
+                    .filter(r -> (r.getEmail() != null && !r.getEmail().isBlank()) || (r.getPhone() != null && !r.getPhone().isBlank()))
+                    .count();
+        }
+
         private boolean isRecruiterAccessibleToUser(Recruiter r, int userId) {
             // Check direct application link
             boolean directApp = appRepo.storage.stream()

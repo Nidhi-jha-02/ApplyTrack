@@ -284,6 +284,42 @@ public class RecruiterService {
     }
 
     /**
+     * Returns count of distinct companies connected in the user's recruiter network.
+     */
+    public int getDistinctCompaniesCount(int userId) {
+        if (userId <= 0) return 0;
+        try {
+            return recruiterRepository.countDistinctCompaniesByUserId(userId);
+        } catch (SQLException e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Returns count of applications with an assigned recruiter.
+     */
+    public int getLinkedApplicationsCount(int userId) {
+        if (userId <= 0) return 0;
+        try {
+            return recruiterRepository.countLinkedApplicationsByUserId(userId);
+        } catch (SQLException e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Returns count of recruiters having direct phone or email contact information.
+     */
+    public int getDirectContactsCount(int userId) {
+        if (userId <= 0) return 0;
+        try {
+            return recruiterRepository.countDirectContactsByUserId(userId);
+        } catch (SQLException e) {
+            return 0;
+        }
+    }
+
+    /**
      * Returns count of applications linked to this recruiter.
      */
     public int getAssociatedApplicationsCount(int recruiterId, int userId) {

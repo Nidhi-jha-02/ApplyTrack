@@ -64,6 +64,11 @@ public class InterviewsController implements Initializable {
     @FXML private Button scheduleInterviewBtn;
     @FXML private Button refreshBtn;
 
+    @FXML private Label totalInterviewsCardLabel;
+    @FXML private Label upcomingCardLabel;
+    @FXML private Label completedCardLabel;
+    @FXML private Label passedCardLabel;
+
     @FXML private TextField searchField;
     @FXML private ComboBox<String> timelineFilterBox;
     @FXML private ComboBox<String> outcomeFilterBox;
@@ -345,6 +350,21 @@ public class InterviewsController implements Initializable {
 
             int total = interviewService.getInterviewCount(userId);
             int upcoming = interviewService.getUpcomingInterviewCount(userId);
+            int completed = interviewService.getCompletedInterviewCount(userId);
+            int passed = interviewService.getPassedInterviewCount(userId);
+
+            if (totalInterviewsCardLabel != null) {
+                totalInterviewsCardLabel.setText(String.valueOf(total));
+            }
+            if (upcomingCardLabel != null) {
+                upcomingCardLabel.setText(String.valueOf(upcoming));
+            }
+            if (completedCardLabel != null) {
+                completedCardLabel.setText(String.valueOf(completed));
+            }
+            if (passedCardLabel != null) {
+                passedCardLabel.setText(String.valueOf(passed));
+            }
 
             if (recordCountBadge != null) {
                 recordCountBadge.setText(total + (total == 1 ? " Interview" : " Interviews"));
@@ -371,7 +391,9 @@ public class InterviewsController implements Initializable {
     private void updateEmptyState() {
         boolean isEmpty = masterData.isEmpty();
         emptyStateContainer.setVisible(isEmpty);
+        emptyStateContainer.setManaged(isEmpty);
         interviewsTable.setVisible(!isEmpty);
+        interviewsTable.setManaged(!isEmpty);
     }
 
     @FXML
@@ -425,6 +447,7 @@ public class InterviewsController implements Initializable {
             try {
                 boolean deleted = interviewService.deleteInterview(selected.getId(), userId);
                 if (deleted) {
+                    interviewsTable.getSelectionModel().clearSelection();
                     loadInterviewsAsync();
                     showAlert(Alert.AlertType.INFORMATION, "Deleted", "Interview round #" + selected.getId() + " was deleted successfully.");
                 } else {

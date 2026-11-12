@@ -184,6 +184,8 @@ public class InterviewDialogController implements Initializable {
             applicationBox.setItems(FXCollections.observableArrayList(apps));
             if (!apps.isEmpty()) {
                 applicationBox.setValue(apps.get(0));
+            } else {
+                showError("No active job applications found. Please create a job application in the Applications module first before scheduling interviews.");
             }
         } catch (SQLException e) {
             System.err.println("Error loading user applications for interview dialog: " + e.getMessage());

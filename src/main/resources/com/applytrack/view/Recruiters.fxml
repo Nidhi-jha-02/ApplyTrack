@@ -7,8 +7,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -25,6 +28,47 @@
             <Button fx:id="refreshBtn" onAction="#handleRefresh" styleClass="btn-secondary" text="↻ Refresh" />
         </HBox>
     </HBox>
+
+    <!-- 4 KPI Summary Metric Cards -->
+    <GridPane hgap="16.0" vgap="16.0">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="25.0" />
+            <ColumnConstraints percentWidth="25.0" />
+            <ColumnConstraints percentWidth="25.0" />
+            <ColumnConstraints percentWidth="25.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="95.0" prefHeight="100.0" />
+        </rowConstraints>
+
+        <!-- Card 1: Total Recruiters -->
+        <VBox spacing="4.0" styleClass="card, card-primary" GridPane.columnIndex="0">
+            <Label styleClass="card-title" text="Total Recruiters" />
+            <Label fx:id="totalRecruitersCardLabel" styleClass="card-value" text="0" />
+            <Label styleClass="card-caption" text="Talent acquisition contacts" />
+        </VBox>
+
+        <!-- Card 2: Companies Connected -->
+        <VBox spacing="4.0" styleClass="card, card-info" GridPane.columnIndex="1">
+            <Label styleClass="card-title" text="Companies Connected" />
+            <Label fx:id="companiesConnectedCardLabel" styleClass="card-value" text="0" />
+            <Label styleClass="card-caption" text="Hiring partner organizations" />
+        </VBox>
+
+        <!-- Card 3: Linked Applications -->
+        <VBox spacing="4.0" styleClass="card, card-success" GridPane.columnIndex="2">
+            <Label styleClass="card-title" text="Linked Applications" />
+            <Label fx:id="activeAppsCardLabel" styleClass="card-value" text="0" />
+            <Label styleClass="card-caption" text="Applications with recruiter" />
+        </VBox>
+
+        <!-- Card 4: Direct Contacts -->
+        <VBox spacing="4.0" styleClass="card, card-warning" GridPane.columnIndex="3">
+            <Label styleClass="card-title" text="Direct Contacts" />
+            <Label fx:id="directContactsCardLabel" styleClass="card-value" text="0" />
+            <Label styleClass="card-caption" text="Direct phone or email available" />
+        </VBox>
+    </GridPane>
 
     <!-- Search, Filter & Sort Controls Card -->
     <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="card" style="-fx-padding: 12px 16px;">
@@ -43,12 +87,12 @@
     <StackPane VBox.vgrow="ALWAYS">
         <TableView fx:id="recruitersTable" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="nameCol" prefWidth="200.0" text="Recruiter Name" />
+                <TableColumn fx:id="nameCol" prefWidth="190.0" text="Recruiter Name" />
                 <TableColumn fx:id="companyCol" prefWidth="180.0" text="Company" />
                 <TableColumn fx:id="emailCol" prefWidth="210.0" text="Email Address" />
                 <TableColumn fx:id="phoneCol" prefWidth="150.0" text="Phone Number" />
-                <TableColumn fx:id="appsCol" prefWidth="140.0" text="Applications" />
-                <TableColumn fx:id="infoCol" prefWidth="180.0" text="LinkedIn / Notes" />
+                <TableColumn fx:id="appsCol" prefWidth="130.0" text="Applications" />
+                <TableColumn fx:id="infoCol" prefWidth="200.0" text="LinkedIn / Notes" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN" />
@@ -73,4 +117,3 @@
         <Button fx:id="deleteBtn" disable="true" onAction="#handleDeleteRecruiter" styleClass="btn-danger" text="Delete Recruiter" />
     </HBox>
 </VBox>
-
